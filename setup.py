@@ -10,11 +10,16 @@ from setuptools import setup
 from torch.utils import cpp_extension
 
 
+os.environ['CC'] = '/usr/bin/gcc-7'
+os.environ['CXX'] = '/usr/bin/g++-7'
+os.environ['CCP'] = '/usr/bin/g++-7'
+
+
 @lru_cache(None)
 def cuda_toolkit_available():
     # https://github.com/idiap/fast-transformers/blob/master/setup.py
     try:
-        call(["nvcc"], stdout=DEVNULL, stderr=DEVNULL)
+        call(["CC=/usr/bin/gcc-7 CXX=/usr/bin/g++-7 CCP=/usr/bin/g++-7 nvcc"], stdout=DEVNULL, stderr=DEVNULL)
         return True
     except FileNotFoundError:
         return False
